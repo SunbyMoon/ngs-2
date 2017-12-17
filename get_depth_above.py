@@ -1,14 +1,19 @@
 #!/usr/local/bin/python3
 # _*_ coding: utf-8 _*_
-"""
-this is a python stript to isolate loci with depth more than a given number
-  input1: depth file exported from samtools depth
-          (tab seperated 3 columns: reference name, position, depth)
-  input2: a depth thrshold
-  output: a new depth file with depth above given threshold
-"""
 
 import sys
+
+
+def usage():
+    message = """this is a python stript to isolate loci with depth more than a given number
+  USAGE: python3 get_depth_above.py <depth_file> <threshold>
+  <depth_file>: depth file path exported from samtools depth
+          (tab seperated 3 columns: reference name, position, depth)
+  <threshold>: a depth thrshold
+  OUTPUT: a new depth file with depth above given threshold
+
+AUTHER: ysh_xiong(1240172230@qq.com)"""
+    print(message)
 
 
 def main():
@@ -28,9 +33,18 @@ def main():
                     writehandle.write(line + '\n')
                     new_count += 1
     trim_percent = round(100 * new_count / raw_count, 2)
+    print('output depth file at "{}"'.format(out_filename))
     print('{}/{} position isolated : {}%'.format(new_count, raw_count, trim_percent))
 
 
 if __name__ == '__main__':
-    main()
-    print('done!')
+    if len(sys.argv) == 1:
+        usage()
+    elif len(sys.argv) == 3:
+        try:
+            main()
+            print('done!')
+        except:
+            usage()
+    else:
+        usage()
