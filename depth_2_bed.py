@@ -6,7 +6,7 @@ import sys
 
 
 def usage():
-    message = """a python stript tpo convert samtools depth output to .bed file
+    message = """a python stript to convert samtools depth output to .bed file
 USAGE: python3 depth_2_bed.py <depth_file>
     <depth_file>: output of samtools depth command
 Output: a .bed file

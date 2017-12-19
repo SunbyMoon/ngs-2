@@ -1,1 +1,1 @@
-my python script related to bioinformatics.
+my python scripts related to bioinformatics.
