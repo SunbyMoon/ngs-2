@@ -1,7 +1,6 @@
 #!/usr/local/bin/python3
 # _*_ coding: utf-8 _*_
 
-
 import sys
 
 
@@ -21,11 +20,12 @@ def main():
     bed_block_count = 0
     with open(bed_filename, 'w') as bed_handle:
         with open(dep_filename, 'r') as dep_handle:
+            # to initiate position searching
             first_line = dep_handle.readline().strip()
+            # each line in DEP: Reference index, Position, Count.
             [last_ref, pos] = first_line.split()[:2]
             last_pos = int(pos)
             head_pos = int(pos)
-            # to initiate position searching
             for line in dep_handle:
                 line = line.strip()
                 current_ref = line.split()[0]
