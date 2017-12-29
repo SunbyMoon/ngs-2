@@ -26,8 +26,16 @@ a Python launcher will be loaded, you can see now.
 
 
 def main():
-    depth = dict()
+    depth = dict()  # depth dict structure:
+                    # {'chr_NO.' :{
+                    #             'pos':[],
+                    #             'dep':[]
+                    #             }
+                    # }
     chr_list = []
+    depth_min = 10000
+    depth_max = 0
+
     with open(sys.argv[1]) as handle:
         for line in handle:
             line = line.strip()
@@ -35,6 +43,10 @@ def main():
             if chr not in chr_list:
                 chr_list.append(chr)
                 depth[chr] = {'pos': [], 'dep': []}
+            if dep > depth_max:
+                depth_max = dep
+            if dep < depth_min:
+                depth_min = dep
             depth[chr]['dep'].append(int(dep))
             depth[chr]['pos'].append(int(pos))
 
