@@ -1,15 +1,20 @@
 #!/usr/local/bin/python3
 # _*_ coding: utf-8 _*_
 
-"""
+import matplotlib.pyplot as plt
+import sys
+
+
+def usage():
+    message = """
 this is a python script to draw a depth file outputed from <samtools depth>
-command. for instance, execute:
+command. for instance, if you execute:
 
     $ samtools depth sample1.bam > sample1.depth
 
 in 'sample1.depth' file: each line consists of:
-    chromosomr_ID   position_NO. coverage_Count
-three column seperated with tab separator '\t'
+
+<chromosomr_ID>\t<position_NO.>\t<coverage_Count>
 
 to draw this information, execute:
 
@@ -17,9 +22,7 @@ to draw this information, execute:
 
 a Python launcher will be loaded, you can see now.
 """
-
-import matplotlib.pyplot as plt
-import sys
+    print(message)
 
 
 def main():
@@ -43,4 +46,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 2 and '.depth' in sys.argv[1]:
+        main()
+    else:
+        usage()
