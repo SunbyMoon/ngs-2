@@ -40,15 +40,17 @@ def main():
         for line in handle:
             line = line.strip()
             chr, pos, dep = line.split('\t')
+            pos = int(pos)
+            dep = int(dep)
             if chr not in chr_list:
                 chr_list.append(chr)
                 depth[chr] = {'pos': [], 'dep': []}
-            if dep > depth_max:
-                depth_max = dep
-            if dep < depth_min:
-                depth_min = dep
-            depth[chr]['dep'].append(int(dep))
-            depth[chr]['pos'].append(int(pos))
+            # if dep > depth_max:
+            #     depth_max = dep
+            # if dep < depth_min:
+            #     depth_min = dep
+            depth[chr]['pos'].append(pos)
+            depth[chr]['dep'].append(dep)
 
     for i in range(0, len(chr_list)):
         plt.subplot(len(chr_list), 1, i + 1)
