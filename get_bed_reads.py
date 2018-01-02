@@ -14,22 +14,30 @@ import pysam
 import sys
 
 
-def read_bed():
+def read_bed(filename_bed):
     """parse .bed file
     """
-    pass
-
-
-def read_bam():
-    """read .bam file with pysam module
-    """
-    pass
+    with open(filename_bed) as handle:
+        for line in handle:
+            line = line.strip()
+            [chromo, start, end] = line.split('\t')[:3]
+            start = int(start)
+            end = int(end)
+            yield chromo, start, end
 
 
 def main():
-    """main job
+    """main job, read bam file and write new bam file
     """
-    pass
+    filename_bed = sys.argv[1]
+    filename_bam = sys.argv[2]
+
+    infile = pysam.AlignmentFile(filename_bam, 'rb')
+    outfile = pysam.AlignmentFile(filename_bam + '.strict', 'w')
+    for each_pos in read_bed(filename_bed):
+        fetch_reads = infile.fetch(each_pos[0], each_pos[1], each_pos[2])
+        for each_read in fetch_reads:
+            outfile.write(each_read)
 
 
 if __name__ == '__main__':
