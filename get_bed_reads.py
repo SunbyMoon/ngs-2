@@ -20,10 +20,13 @@ def read_bed(filename_bed):
     with open(filename_bed) as handle:
         for line in handle:
             line = line.strip()
-            [chromo, start, end] = line.split('\t')[:3]
-            start = int(start)
-            end = int(end)
-            yield chromo, start, end
+            try:
+                [chromo, start, end] = line.split('\t')[:3]
+                start = int(start)
+                end = int(end)
+                yield chromo, start, end
+            except:
+                print('not good bed file format')
 
 
 def main():
@@ -33,7 +36,7 @@ def main():
     filename_bam = sys.argv[2]
 
     infile = pysam.AlignmentFile(filename_bam, 'rb')
-    outfile = pysam.AlignmentFile(filename_bam + '.strict', 'w')
+    outfile = pysam.AlignmentFile(filename_bam + '.bed_strict.bam', 'w')
     for each_pos in read_bed(filename_bed):
         fetch_reads = infile.fetch(each_pos[0], each_pos[1], each_pos[2])
         for each_read in fetch_reads:
